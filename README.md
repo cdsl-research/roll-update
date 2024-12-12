@@ -40,3 +40,20 @@ once all of the pods are Running, we can proceed to the rolling update.
 ### How to use execute rolling updates
 
 first of all, there are two python codes included inside this repository.
+  -rolling update from 6.2.1 version to 6.3.1 version
+  -rolling update from 6.1.1 version to 6.3.1 version
+
+the contents of the code is generally the same, the only thing different is the version of the wordpress application written in the wordpress-deployment.yaml file. below is an example of the version written in the file
+
+```
+        - name: WORDPRESS_DB_USER
+          value: wordpress
+        image: wordpress:6.2.1-apache
+        imagePullPolicy: Always
+        name: wordpress
+        ports:
+```
+in the "name"part inside of the "spec" part of the deployment, the above is written. currently, the version is 6.2.1 but we will be updating the wordpress application to 6.3.1 by using the rollupdate_621_631.py code
+
+the contents of the code is quite complicated to explain in detail, but i will be explaining the flow of the code below;
+1. 
