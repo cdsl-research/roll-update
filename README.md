@@ -8,7 +8,7 @@ In general, this repository includes the contents of the files i used to perform
   -rolling update from 6.2.1 version to 6.3.1 version
   -rolling update from 6.1.1 version to 6.3.1 version
 
-### How To Use
+### How to set up environment for rolling update
 first of all, inside a VM with k3s, copy and paste the three YAML files inside a directory
 the contents of the directiory should be as the following;
 - kustomization.yaml
@@ -37,3 +37,6 @@ wordpress-mysql-5c5bf57bdb-bf8ww   1/1     Running   0             12m
 
 once all of the pods are Running, we can proceed to the rolling update.
 
+### How to use execute rolling updates
+
+first of all, there are two python codes included inside this repository.
