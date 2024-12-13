@@ -1,9 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: roll
+  labels:
+    app: wordpress
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: wordpress
+    tier: frontend
+  type: LoadBalancer
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wp-pv-claim
+  labels:
+    app: wordpress
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: wordpress
   labels:
     app: wordpress
-  name: wordpress
 spec:
   replicas: 20
   selector:
@@ -11,10 +40,10 @@ spec:
       app: wordpress
       tier: frontend
   strategy:
-    rollingUpdate:
-      maxSurge: 10
-      maxUnavailable: 10
     type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 2
   template:
     metadata:
       labels:
@@ -22,25 +51,25 @@ spec:
         tier: frontend
     spec:
       containers:
-      - env:
+      - name: wordpress
+        image: wordpress:6.2.1-apache
+        imagePullPolicy: Always
+        env:
         - name: WORDPRESS_DB_HOST
           value: wordpress-mysql
         - name: WORDPRESS_DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              key: password
               name: mysql-pass
+              key: password
         - name: WORDPRESS_DB_USER
           value: wordpress
-        image: wordpress:6.2.1-apache
-        imagePullPolicy: Always
-        name: wordpress
         ports:
         - containerPort: 80
           name: wordpress
         volumeMounts:
-        - mountPath: /var/www/html
-          name: wordpress-persistent-storage
+        - name: wordpress-persistent-storage
+          mountPath: /var/www/html
       volumes:
       - name: wordpress-persistent-storage
         persistentVolumeClaim:
