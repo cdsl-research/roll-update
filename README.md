@@ -57,7 +57,7 @@ in the "name"part inside of the "spec" part of the deployment, the above is writ
 
 the contents of the code is quite complicated to explain in detail, but i will be explaining the flow of the code below;
 
-1. deleting existing pods and deployments <br />
+**1. deleting existing pods and deployments ** <br />
 since the rolling update code will be used alot of times for data etc, the code will firstly delete all of the existing pods and deployments so that the version of the wordpress image could be set. the following commands will be used to delete it;
 
 ```
