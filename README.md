@@ -57,7 +57,7 @@ in the "name"part inside of the "spec" part of the deployment, the above is writ
 
 the contents of the code is quite complicated to explain in detail, but i will be explaining the flow of the code below;
 
-**1. deleting existing pods and deployments ** <br />
+#### 1. deleting existing pods and deployments <br />
 since the rolling update code will be used alot of times for data etc, the code will firstly delete all of the existing pods and deployments so that the version of the wordpress image could be set. the following commands will be used to delete it;
 
 ```
@@ -66,7 +66,7 @@ kubectl delete deployment wordpress-mysql -n roll
 kubectl delete pods --all -n roll
 ```
 
-2. replicas, maxSurge and maxUnavaliable inquiry <br />
+#### 2. replicas, maxSurge and maxUnavaliable inquiry <br />
 after deleting the existing pods and deployments, the code will then request the user to input the desired value for the 3 values stated. in the main function of the rolling update code, the following part of the code is the syntax for the stated function;
 ```
     replicas = int(input("Enter the number of replicas: "))
@@ -74,19 +74,19 @@ after deleting the existing pods and deployments, the code will then request the
     max_unavailable = int(input("Enter the maxUnavailable value: "))
 ```
 
-3. first deployment of wordpress application <br />
+#### 3. first deployment of wordpress application <br />
 after determining the three values stated above, the code will deploy the wordpress deployment file with it's image version being 6.2.1 using the following command;
 ```
 kubectl apply -f wordpress-deployment.yaml -n roll
 ```
 
-4. rolling update <br />
+#### 4. rolling update <br />
 after the wordpress application with image version 6.2.1 is deployed, the code will then rewrite the image version to 6.3.1 so that the rolling update will be executed. the following code inside the main function is what edits the wordpress deployment file
 ```
     edit_yaml_file("6.3.1", replicas, max_surge, max_unavailable)
 ```
 
-5. metrics records <br />
+#### 5. metrics records <br />
 after the rolling update is finished, the code will then record the time taken for the rolling update and alsothe average CPU usage during the rolling update. <br />
 below is an example of what will be shown on the terminal after the whole python code is finished executing.
 ```
@@ -126,3 +126,4 @@ Time taken for rolling update: 5.628972291946411 seconds
 CPU Usage - Avg: 4.101449275362318m, Min: 1m, Max: 7m
 Memory Usage - Avg: 13.0Mi, Min: 13Mi, Max: 13Mi
 ```
+as you can see on the code above, the code will execute a rolling update while also recording the time taken for the rolling update and the CPU usage. <br />
