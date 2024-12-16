@@ -75,11 +75,10 @@ after deleting the existing pods and deployments, the code will then request the
 ```
 
 3. first deployment of wordpress application <br />
-after determining the three values stated above, the code will deploy the yaml files using the following command;
+after determining the three values stated above, the code will deploy the wordpress deployment file with it's image version being 6.2.1 using the following command;
 ```
 kubectl apply -f wordpress-deployment.yaml -n roll
 ```
-this will deploy the wordpress deployment yaml file with the desired version (example, 6.2.1) 
 
 4. rolling update <br />
 after the wordpress application with image version 6.2.1 is deployed, the code will then rewrite the image version to 6.3.1 so that the rolling update will be executed. the following code inside the main function is what edits the wordpress deployment file
