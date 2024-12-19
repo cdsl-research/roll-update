@@ -1,4 +1,4 @@
-# roll-Update
+# roll-update
 
 This repository contains the files used to perform a rolling update on the WordPress application.
 
@@ -139,6 +139,6 @@ All pods are now running.
 Time taken for rolling update: 7.31 seconds
 CPU Usage Avg: 2.17287439212343m, Min: 1m, Max: 6m
 ```
-![Roll Update Image](./rollupdate.png)
+![Roll Update Image](./rollupdate.PNG)
 
 as you can see on the code above, the code will execute a rolling update while also recording the time taken for the rolling update and the CPU usage. <br />
