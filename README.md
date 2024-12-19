@@ -1,32 +1,32 @@
-# Rolling Update 
+# roll-Update
 
-In general, this repository includes the contents of the files i used to perform a rolling update on the Wordpress application.
+This repository contains the files used to perform a rolling update on the WordPress application.
 
 ### Contents
-- YAML Files
-- Python Files
-  -rolling update from 6.2.1 version to 6.3.1 version
-  -rolling update from 6.1.1 version to 6.3.1 version
+- **YAML Files**: These files are essential for the update process.
+- **Python Files**: Scripts to handle the update from one version to another.
+  - Rolling update from version 6.2.1 to 6.3.1.
+  - Rolling update from version 6.1.1 to 6.3.1.
 
-### How to set up environment for rolling update
-first of all, inside a VM with k3s, copy and paste the three YAML files inside a directory
-the contents of the directiory should be as the following;
-- kustomization.yaml
-- mysql-deployment.yaml
-- wordpress-deployment.yaml
+### How to Set Up Environment for Rolling Update
+First, within a VM equipped with k3s, copy and paste the three YAML files into a directory. The contents of the directory should be as follows:
+- `kustomization.yaml`
+- `mysql-deployment.yaml`
+- `wordpress-deployment.yaml`
 
-after saving the three files, use the command below to apply the files 
+After saving the three files, use the command below to apply the files:
+
 ```
 kubectl apply .k -n roll
 ```
-this command deploys the pods in a namespace called "roll" <br />
-if you wish to deploy the pods in the default namespace, remove "-n roll" from the command, this will also apply to the commands included in the future.
+This command deploys the pods in a namespace called "roll." If you wish to deploy the pods in the default namespace, remove `-n roll` from the command. This adjustment should also be applied to any future commands.
 
-after deploying the pods, you can check the status of the pods with the following command;
+After deploying the pods, you can check the status of the pods with the following command:
+
 ```
 kubectl get pod -n roll
 ```
-the expected outcome should be like this
+The expected outcome should be like this.
 ```
 NAME                               READY   STATUS    RESTARTS      AGE
 wordpress-c8d76b68-64kpf           1/1     Running   1 (10m ago)   12m
@@ -35,15 +35,15 @@ wordpress-c8d76b68-v25v4           1/1     Running   0             12m
 wordpress-mysql-5c5bf57bdb-bf8ww   1/1     Running   0             12m
 ```
 
-once all of the pods are in the "Running" state, we can proceed to the rolling update.
+Once all of the pods are in the "Running" state, we can proceed to the rolling update.
 
 ### How to use execute rolling updates
 
-first of all, there are two python codes included inside this repository.
-  -rolling update from 6.2.1 version to 6.3.1 version
-  -rolling update from 6.1.1 version to 6.3.1 version
+First of all, there are two python codes included inside this repository:
+  -Rolling update from 6.2.1 version to 6.3.1 version
+  -Rolling update from 6.1.1 version to 6.3.1 version
 
-the contents of the code is generally the same, the only thing different is the version of the wordpress application written in the wordpress-deployment.yaml file. below is an example of the version written in the file
+The contents of the code is generally the same, the only thing different is the version of the wordpress application written in the wordpress-deployment.yaml file. below is an example of the version written in the file.
 
 ```
         - name: WORDPRESS_DB_USER
@@ -53,12 +53,12 @@ the contents of the code is generally the same, the only thing different is the 
         name: wordpress
         ports:
 ```
-in the "name"part inside of the "spec" part of the deployment, the above is written. currently, the version is 6.2.1 but we will be updating the wordpress application to 6.3.1 by using the rollupdate_621_631.py code
+In the "name"part inside of the "spec" part of the deployment, the above is written. currently, the version is 6.2.1 but we will be updating the wordpress application to 6.3.1 by using the rollupdate_621_631.py code.
 
-the contents of the code is quite complicated to explain in detail, but i will be explaining the flow of the code below;
+The contents of the code is quite complicated to explain in detail, but i will be explaining the flow of the code below;
 
-#### 1. deleting existing pods and deployments <br />
-since the rolling update code will be used alot of times for data etc, the code will firstly delete all of the existing pods and deployments so that the version of the wordpress image could be set. the following commands will be used to delete it;
+#### 1. Deleting existing pods and deployments <br />
+Since the rolling update code will be used alot of times for data etc, the code will firstly delete all of the existing pods and deployments so that the version of the wordpress image could be set. the following commands will be used to delete it;
 
 ```
 kubectl delete deployment wordpress -n roll
@@ -66,34 +66,34 @@ kubectl delete deployment wordpress-mysql -n roll
 kubectl delete pods --all -n roll
 ```
 
-#### 2. replicas, maxSurge and maxUnavaliable inquiry <br />
-after deleting the existing pods and deployments, the code will then request the user to input the desired value for the 3 values stated. in the main function of the rolling update code, the following part of the code is the syntax for the stated function;
+#### 2. Replicas, maxSurge and maxUnavaliable inquiry <br />
+After deleting the existing pods and deployments, the code will then request the user to input the desired value for the 3 values stated. in the main function of the rolling update code, the following part of the code is the syntax for the stated function;
 ```
     replicas = int(input("Enter the number of replicas: "))
     max_surge = int(input("Enter the maxSurge value: "))
     max_unavailable = int(input("Enter the maxUnavailable value: "))
 ```
 
-#### 3. first deployment of wordpress application <br />
-after determining the three values stated above, the code will deploy the wordpress deployment file with it's image version being 6.2.1 using the following command;
+#### 3. First deployment of wordpress application <br />
+After determining the three values stated above, the code will deploy the wordpress deployment file with it's image version being 6.2.1 using the following command;
 ```
 kubectl apply -f wordpress-deployment.yaml -n roll
 ```
 
 #### 4. rolling update <br />
-after the wordpress application with image version 6.2.1 is deployed, the code will then rewrite the image version to 6.3.1 so that the rolling update will be executed. the following code inside the main function is what edits the wordpress deployment file
+After the wordpress application with image version 6.2.1 is deployed, the code will then rewrite the image version to 6.3.1 so that the rolling update will be executed. the following code inside the main function is what edits the wordpress deployment file:
 ```
     edit_yaml_file("6.3.1", replicas, max_surge, max_unavailable)
 ```
 
-#### 5. metrics records <br />
-after the rolling update is finished, the code will then record the time taken for the rolling update and alsothe average CPU usage during the rolling update. <br />
-below is an example of what will be shown on the terminal after the whole python code is finished executing.<br />
-use the following command to run the python script <br />
+#### 5. Metrics records <br />
+After the rolling update is finished, the code will then record the time taken for the rolling update and alsothe average CPU usage during the rolling update. <br />
+Below is an example of what will be shown on the terminal after the whole python code is finished executing.<br />
+Use the following command to run the python script. <br />
 ```
 python3 rollupdate_621_631.py
 ```
-the following output will come out when replicas is set to 6, maxsurge and maxunavailable is set to 3
+The following output will come out when replicas is set to 6, maxsurge and maxunavailable is set to 3
 ```
 myw@c0a22173-myw:~/roll$ python3 roll1.py
 deployment.apps "wordpress" deleted
