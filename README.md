@@ -88,7 +88,12 @@ after the wordpress application with image version 6.2.1 is deployed, the code w
 
 #### 5. metrics records <br />
 after the rolling update is finished, the code will then record the time taken for the rolling update and alsothe average CPU usage during the rolling update. <br />
-below is an example of what will be shown on the terminal after the whole python code is finished executing.
+below is an example of what will be shown on the terminal after the whole python code is finished executing.<br />
+use the following command to run the python script <br />
+```
+python3 rollupdate_621_631.py
+```
+the following output will come out when replicas is set to 6, maxsurge and maxunavailable is set to 3
 ```
 myw@c0a22173-myw:~/roll$ python3 roll1.py
 deployment.apps "wordpress" deleted
