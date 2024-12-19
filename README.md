@@ -86,7 +86,7 @@ After the wordpress application with image version 6.2.1 is deployed, the code w
     edit_yaml_file("6.3.1", replicas, max_surge, max_unavailable)
 ```
 
-#### 5. Metrics records <br />
+#### 5. Output example <br />
 After the rolling update is finished, the code will then record the time taken for the rolling update and alsothe average CPU usage during the rolling update. <br />
 Below is an example of what will be shown on the terminal after the whole python code is finished executing.<br />
 Use the following command to run the python script. <br />
@@ -95,40 +95,50 @@ python3 rollupdate_621_631.py
 ```
 The following output will come out when replicas is set to 6, maxsurge and maxunavailable is set to 3
 ```
-myw@c0a22173-myw:~/roll$ python3 roll1.py
+roll13@ca022173-roll13:~/roll$ python3 roll.py
 deployment.apps "wordpress" deleted
 pod "wordpress-57fd86ff76-2qncg" deleted
 pod "wordpress-57fd86ff76-2wvtc" deleted
 pod "wordpress-57fd86ff76-4zfsq" deleted
-pod "wordpress-57fd86ff76-65kkw" deleted
-pod "wordpress-57fd86ff76-6865cl" deleted
+pod "wordpress-57fd86ff76-65kmw" deleted
+pod "wordpress-57fd86ff76-686sc1" deleted
 pod "wordpress-57fd86ff76-7t22r" deleted
 pod "wordpress-57fd86ff76-7t6kk" deleted
 pod "wordpress-57fd86ff76-8hpt2" deleted
-pod "wordpress-57fd86ff76-8md7m" deleted
-pod "wordpress-57fd86ff76-8nl5p" deleted
+pod "wordpress-57fd86ff76-3nd7m" deleted
+pod "wordpress-57fd86ff76-8n15p" deleted
 pod "wordpress-57fd86ff76-bpwrp" deleted
-pod "wordpress-57fd86ff76-h9d59" deleted
-pod "wordpress-57fd86ff76-j6rml" deleted
-pod "wordpress-57fd86ff76-jrwn7" deleted
-pod "wordpress-57fd86ff76-pc8kd" deleted
+pod "wordpress-57fd86ff76-hd95q" deleted
+pod "wordpress-57fd86ff76-j6rm1" deleted
+pod "wordpress-57fd86ff76-jwrn7" deleted
+pod "wordpress-57fd86ff76-p8ckd" deleted
 pod "wordpress-57fd86ff76-pcc86" deleted
-pod "wordpress-57fd86ff76-q6lt9" deleted
-pod "wordpress-57fd86ff76-qdlq" deleted
+pod "wordpress-57fd86ff76-dl1tq" deleted
+pod "wordpress-57fd86ff76-dqlq" deleted
 pod "wordpress-57fd86ff76-wbjgr" deleted
 Enter the number of replicas: 6
 Enter the maxSurge value: 3
 Enter the maxUnavailable value: 3
+service/roll unchanged
+persistentvolumeclaim/wp-pv-claim unchanged
 deployment.apps/wordpress created
+No resources found in roll namespace.
+0 out of 6 pods are running. Waiting...
+0 containers are currently being deployed (expected max surge: 3).
+4 out of 6 pods are running. Waiting...
+6 containers are currently being deployed (expected max surge: 3).
+All 6 pods are now running.
+Service/roll unchanged
+persistentvolumeclaim/wp-pv-claim unchanged
+deployment.apps/wordpress configured
+6 containers are currently being deployed
+3 out of 6 pods are running. Waiting...
 6 containers are currently being deployed (expected max surge: 3).
 0 out of 6 pods are running. Waiting...
-All 6 pods are now running.
-deployment.apps/wordpress configured
-3 containers are currently being deployed (expected max surge: 3).
-3 out of 6 pods are running. Waiting...
-All 6 pods are now running.
-Time taken for rolling update: 5.628972291946411 seconds
-CPU Usage - Avg: 4.101449275362318m, Min: 1m, Max: 7m
-Memory Usage - Avg: 13.0Mi, Min: 13Mi, Max: 13Mi
+All pods are now running.
+Time taken for rolling update: 7.31 seconds
+CPU Usage Avg: 2.17287439212343m, Min: 1m, Max: 6m
 ```
+![Roll Update Image](./rollupdate.png)
+
 as you can see on the code above, the code will execute a rolling update while also recording the time taken for the rolling update and the CPU usage. <br />
