@@ -46,12 +46,12 @@ First of all, there are two python codes included inside this repository:
 The contents of the code is generally the same, the only thing different is the version of the wordpress application written in the wordpress-deployment.yaml file. below is an example of the version written in the file.
 
 ```
-        - name: WORDPRESS_DB_USER
-          value: wordpress
+        spec:
+      containers:
+      - name: wordpress
         image: wordpress:6.2.1-apache
         imagePullPolicy: Always
-        name: wordpress
-        ports:
+        env:
 ```
 In the "name"part inside of the "spec" part of the deployment, the above is written. currently, the version is 6.2.1 but we will be updating the wordpress application to 6.3.1 by using the rollupdate_621_631.py code.
 
