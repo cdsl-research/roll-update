@@ -55,7 +55,7 @@ The contents of the code is generally the same, the only thing different is the 
 ```
 In the "name"part inside of the "spec" part of the deployment, the above is written. currently, the version is 6.2.1 but we will be updating the wordpress application to 6.3.1 by using the rollupdate_621_631.py code.<br />
 
-The contents of the code is quite complicated to explain in detail, but i will be explaining the flow of the code below;
+The contents of the code is quite complicated to explain in detail, but i will be explaining the flow of the code below:
 
 #### 1. Deleting existing pods and deployments <br />
 Since the rolling update code will be used alot of times for data etc, the code will firstly delete all of the existing pods and deployments so that the version of the wordpress image could be set. the following commands will be used to delete it;
