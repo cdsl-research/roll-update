@@ -58,7 +58,7 @@ In the "name"part inside of the "spec" part of the deployment, the above is writ
 The contents of the code is quite complicated to explain in detail, but i will be explaining the flow of the code below:
 
 #### 1. Deleting existing pods and deployments <br />
-Since the rolling update code will be used alot of times for data etc, the code will firstly delete all of the existing pods and deployments so that the version of the wordpress image could be set. the following commands will be used to delete it;
+Since the rolling update code will be used alot of times for data etc, the code will firstly delete all of the existing pods and deployments so that the version of the wordpress image could be set. the following commands will be used to delete it:
 
 ```
 kubectl delete deployment wordpress -n roll
@@ -67,7 +67,7 @@ kubectl delete pods --all -n roll
 ```
 
 #### 2. Replicas, maxSurge and maxUnavaliable inquiry <br />
-After deleting the existing pods and deployments, the code will then request the user to input the desired value for the 3 values stated. in the main function of the rolling update code, the following part of the code is the syntax for the stated function;
+After deleting the existing pods and deployments, the code will then request the user to input the desired value for the 3 values stated. in the main function of the rolling update code, the following part of the code is the syntax for the stated function:
 ```
     replicas = int(input("Enter the number of replicas: "))
     max_surge = int(input("Enter the maxSurge value: "))
@@ -75,7 +75,7 @@ After deleting the existing pods and deployments, the code will then request the
 ```
 
 #### 3. First deployment of wordpress application <br />
-After determining the three values stated above, the code will deploy the wordpress deployment file with it's image version being 6.2.1 using the following command;
+After determining the three values stated above, the code will deploy the wordpress deployment file with it's image version being 6.2.1 using the following command:
 ```
 kubectl apply -f wordpress-deployment.yaml -n roll
 ```
