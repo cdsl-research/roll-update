@@ -95,7 +95,7 @@ python3 rollupdate_621_631.py
 ```
 The following output will come out when replicas is set to 6, maxsurge and maxunavailable is set to 3
 ```
-roll13@ca022173-roll13:~/roll$ python3 roll.py
+rroll3@c0a022173-rroll3:~/roll$ python3 roll.py
 deployment.apps "wordpress" deleted
 pod "wordpress-57fd86ff76-2qncg" deleted
 pod "wordpress-57fd86ff76-2wvtc" deleted
