@@ -39,9 +39,9 @@ Once all of the pods are in the "Running" state, we can proceed to the rolling u
 
 ### How to use execute rolling updates
 
-First of all, there are two python codes included inside this repository:
-  -Rolling update from 6.2.1 version to 6.3.1 version
-  -Rolling update from 6.1.1 version to 6.3.1 version
+First of all, there are two python codes included inside this repository:<br />
+  -Rolling update from 6.2.1 version to 6.3.1 version<br />
+  -Rolling update from 6.1.1 version to 6.3.1 version<br />
 
 The contents of the code is generally the same, the only thing different is the version of the wordpress application written in the wordpress-deployment.yaml file. below is an example of the version written in the file.
 
@@ -53,7 +53,7 @@ The contents of the code is generally the same, the only thing different is the 
         imagePullPolicy: Always
         env:
 ```
-In the "name"part inside of the "spec" part of the deployment, the above is written. currently, the version is 6.2.1 but we will be updating the wordpress application to 6.3.1 by using the rollupdate_621_631.py code.
+In the "name"part inside of the "spec" part of the deployment, the above is written. currently, the version is 6.2.1 but we will be updating the wordpress application to 6.3.1 by using the rollupdate_621_631.py code.<br />
 
 The contents of the code is quite complicated to explain in detail, but i will be explaining the flow of the code below;
 
