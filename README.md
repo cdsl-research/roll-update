@@ -93,7 +93,7 @@ Use the following command to run the python script. <br />
 ```
 python3 rollupdate_621_631.py
 ```
-The following output will come out when replicas is set to 6, maxsurge and maxunavailable is set to 3
+The following output will come out when replicas is set to 6, maxsurge and maxunavailable is set to 3.
 ```
 rroll3@c0a022173-rroll3:~/roll$ python3 roll.py
 deployment.apps "wordpress" deleted
@@ -141,4 +141,4 @@ CPU Usage Avg: 2.17287439212343m, Min: 1m, Max: 6m
 ```
 ![Roll Update Image](./rollupdate.PNG)
 
-as you can see on the code above, the code will execute a rolling update while also recording the time taken for the rolling update and the CPU usage. <br />
+As you can see on the code above, the code will execute a rolling update while also recording the time taken for the rolling update and the CPU usage. <br />
